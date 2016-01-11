@@ -1,9 +1,13 @@
 #pragma once
 
 #include "ofMain.h"
+#include "mesh.h"
 
-#include "Eigen/Core"
-#include "GL/glut.h"
+//#include "math.h"
+//#include "igl/read_triangle_mesh.h"
+
+//#include "Eigen/Core"
+//#include "GL/glut.h"
 
 class ofApp : public ofBaseApp{
 
@@ -26,4 +30,10 @@ class ofApp : public ofBaseApp{
 	
 	public:
 		ofEasyCam cam;
-};
+		myMesh* mesh;
+
+};		
+
+
+
+		

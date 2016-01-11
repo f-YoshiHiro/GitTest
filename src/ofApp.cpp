@@ -1,8 +1,13 @@
 #include "ofApp.h"
+namespace {
+	std::string obj_file_pass = "./data/teddy.obj";
+}
+
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-
+	mesh = new myObjMesh();
+	mesh->read_from_file(obj_file_pass);
 }
 
 //--------------------------------------------------------------

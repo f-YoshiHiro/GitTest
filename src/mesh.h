@@ -9,14 +9,14 @@ typedef enum{
 	MESH_TYPE_TOTAL_NUM
 } MeshType;
 
-class Mesh{
+class myMesh{
 	public:
-		Mesh() : m_mesh_type() {}
-		Mesh(MeshType mesh_type) : m_mesh_type(mesh_type) {}
-		virtual ~Mesh() { Cleanup(); }
+		myMesh() : m_mesh_type() {}
+		myMesh(MeshType mesh_type) : m_mesh_type(mesh_type) {}
+		virtual ~myMesh() { Cleanup(); }
 
 		void Reset();
-		virtual bool Init() { std::cout << "Warning: reach base class virtual init function." << std::endl; }
+		virtual bool Init() { std::cout << "Warning: reach base class virtual init function." << std::endl; return false; }
 		virtual void Cleanup();
 
 	protected:
@@ -33,12 +33,14 @@ class Mesh{
 		int GetTriNum()  const { return (int)m_F.rows(); }
 		int GetTetNum()  const { return (int)m_T.rows(); }
 
+		virtual void read_from_file(std::string filename) { std::cout << "Warning: reach base class virtual init function." << std::endl; };
+
 };
 
-class ObjMesh : public Mesh {
+class myObjMesh : public myMesh {
 	public:
-		ObjMesh() : Mesh(MESH_TYPE_OBJ) {}
-		virtual ~ObjMesh() {}
+		myObjMesh() : myMesh(MESH_TYPE_OBJ) {}
+		virtual ~myObjMesh() {}
 
 		virtual bool Init();
 	
@@ -46,5 +48,5 @@ class ObjMesh : public Mesh {
 		float m_scaling;
 
 	public:
-		void read_from_file(char* filename);
+		virtual void read_from_file(std::string filename);
 };
