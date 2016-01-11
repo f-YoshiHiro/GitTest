@@ -2,18 +2,17 @@
 
 #include "iostream"
 #include "math_headers.h"
-#include <igl/read_triangle_mesh.h>
 
 typedef enum{
 	MESH_TYPE_OBJ,
 	MESH_TYPE_TOTAL_NUM
 } MeshType;
 
-class myMesh{
+class Mesh{
 	public:
-		myMesh() : m_mesh_type() {}
-		myMesh(MeshType mesh_type) : m_mesh_type(mesh_type) {}
-		virtual ~myMesh() { Cleanup(); }
+		Mesh() : m_mesh_type() {}
+		Mesh(MeshType mesh_type) : m_mesh_type(mesh_type) {}
+		virtual ~Mesh() { Cleanup(); }
 
 		void Reset();
 		virtual bool Init() { std::cout << "Warning: reach base class virtual init function." << std::endl; return false; }
@@ -29,18 +28,23 @@ class myMesh{
 		EigenMatrixXi m_T;  // tet index
 
 	public:	// get method
-		int GetVertNum() const { return (int)m_V.rows(); }
-		int GetTriNum()  const { return (int)m_F.rows(); }
-		int GetTetNum()  const { return (int)m_T.rows(); }
+		int getVertNum() const { return (int)m_V.rows(); }
+		int getTriNum()  const { return (int)m_F.rows(); }
+		int getTetNum()  const { return (int)m_T.rows(); }
+
+		void computeNormal();
+
+		virtual void renderMesh() { std::cout << "Warning: reach base class virtual draw function." << std::endl; };
+		virtual void renderPoly() { std::cout << "Warning: reach base class virtual draw function." << std::endl; };
 
 		virtual void read_from_file(std::string filename) { std::cout << "Warning: reach base class virtual init function." << std::endl; };
 
 };
 
-class myObjMesh : public myMesh {
+class ObjMesh : public Mesh {
 	public:
-		myObjMesh() : myMesh(MESH_TYPE_OBJ) {}
-		virtual ~myObjMesh() {}
+		ObjMesh() : Mesh(MESH_TYPE_OBJ) {}
+		virtual ~ObjMesh() {}
 
 		virtual bool Init();
 	
@@ -48,5 +52,8 @@ class myObjMesh : public myMesh {
 		float m_scaling;
 
 	public:
+		virtual void renderMesh();
+		virtual void renderPoly();
+
 		virtual void read_from_file(std::string filename);
 };

@@ -30,7 +30,8 @@ class ofApp : public ofBaseApp{
 	
 	public:
 		ofEasyCam cam;
-		myMesh* mesh;
+		std::vector<ofLight> light;
+		Mesh* mesh;
 
 };		
 
